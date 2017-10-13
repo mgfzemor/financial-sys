@@ -2,24 +2,23 @@ package finantials;
 
 import java.util.Map;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 
 public class Realized extends AbstractBill {
 	
 	private Map<Integer, Rubric> rubrics;
 
-	private Date month;
+	private int month;
 	
 	public Realized() {
 		this.rubrics = new HashMap<Integer, Rubric>();
 	}
 	
-	public Date getMonth() {
+	public int getMonth() {
 		return this.month;
 	}
 	
-	public void setMonth(Date month) {
+	public void setMonth(int month) {
 		this.month = month;
 	}
 	
