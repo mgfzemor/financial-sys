@@ -11,7 +11,7 @@ import general.AppUtils;
 
 public class TestAppUtils {
 	
-	final String ModeloControleOrcamentarioCompleto_csv_path = "resources/Modelo_Controle_Orcamentario_Completo.csv";
+	final String csv_path = "resources/Modelo_Controle_Orcamentario_Completo.csv";
 	final String basePlanPath = "resources/BasePlan.csv";
 	
 	@Test
@@ -23,13 +23,13 @@ public class TestAppUtils {
 	
 	@Test
 	public void testParseCSVFile() throws Exception {
-		final String MethodName = "parsingCSV";
-		Method method = AppUtils.class.getDeclaredMethod(MethodName, String.class);
-		method.setAccessible(true);
-		Object csvObject = method.invoke(AppUtils.class, ModeloControleOrcamentarioCompleto_csv_path);
-		List<List<String>> csv = (List<List<String>>)csvObject;
-		String expected = "Janeiro";
-		String contentL1C0 = csv.get(1).get(3);
+		final String parsingCSVMethodName = "parsingCSV";
+		Method parsingCSV = AppUtils.class.getDeclaredMethod(parsingCSVMethodName, String.class);
+		parsingCSV.setAccessible(true);
+		List<List<String>> csv = (List<List<String>>)parsingCSV.invoke(AppUtils.class, csv_path);
+		String expected = "classificação";
+		String contentL1C0 = csv.get(1).get(0);
+		System.out.println(contentL1C0);
 		assertTrue("Esperado extrair corretamente o conteúdo do CSV", contentL1C0.equals(expected));
 	}
 }

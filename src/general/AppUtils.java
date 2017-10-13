@@ -38,24 +38,43 @@ public final class AppUtils {
 	public static Realized readRealizedMonthly(String pathFile) {
 		return null;
 	}
-
+	
 	private static List<List<String>> parsingCSV(String pathFile) throws IOException {
+		return parsingCSV(pathFile, ';');
+	}
+	
+	private static List<List<String>> parsingCSV(String pathFile, final char SEPARATOR) throws IOException {
 		File csvFile = new File(pathFile);
-		final Charset UTF8 = Charset.forName("UTF-8");
-		FileInputStream fileInputStream = new FileInputStream(csvFile);
-		
 		List<List<String>> content = new ArrayList<>();
-		InputStreamReader inputStream = new InputStreamReader(fileInputStream, UTF8);
 		
 		try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
 			String line = "";
 			while ((line = reader.readLine()) != null) {				
-				List<String> fields = Arrays.asList(line.split(";"));				
+				List<String> fields = new ArrayList<>();//Arrays.asList(line.split(";"));
+				
+				String field = "";
+				final char QUOTE = '"';
+
+				boolean isContent = false;
+				
+				for (int i = 0;i < line.length();i++) {
+					
+					final char c = line.charAt(i);
+					if (i == 0) isContent = true;
+					else if (c == QUOTE && i != 0) isContent = !isContent;
+					else if (c == SEPARATOR || i == line.length() - 1) {
+						fields.add(field);
+						field = "";
+					}
+					
+					if (isContent) field += c;
+				}
+				
 				content.add(fields);
 			}	
 		}
 		
-		return content;
+		return content;		
 	}
 	
 	public static String formatDate(Date date) {
