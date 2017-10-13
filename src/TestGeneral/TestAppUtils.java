@@ -2,6 +2,7 @@ package TestGeneral;
 
 import static org.junit.Assert.*;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import org.junit.Test;
 import finantials.BasePlan;
@@ -27,8 +28,8 @@ public class TestAppUtils {
 		method.setAccessible(true);
 		Object csvObject = method.invoke(AppUtils.class, ModeloControleOrcamentarioCompleto_csv_path);
 		List<List<String>> csv = (List<List<String>>)csvObject;
-		String expected = "classificação";
-		String contentL1C0 = csv.get(1).get(0);
-		assertSame("Esperado extrair corretamente o conteúdo do CSV", expected, contentL1C0);
+		String expected = "Janeiro";
+		String contentL1C0 = csv.get(1).get(3);
+		assertTrue("Esperado extrair corretamente o conteúdo do CSV", contentL1C0.equals(expected));
 	}
 }
