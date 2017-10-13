@@ -8,27 +8,27 @@ public class RubricBase {
 
 	protected String name;
 	
-	protected int getClassification() {
+	public int getClassification() {
 		return this.classification;
 	}
 	
-	protected void setClassification(int classification) {
+	public void setClassification(int classification) {
 		this.classification = classification;
 	}
 	
-	protected int getCode() {
+	public int getCode() {
 		return this.code;
 	}
 	
-	protected void setCode(int code) {
+	public void setCode(int code) {
 		this.code = code;
 	}
 	
-	protected String getName() {
+	public String getName() {
 		return this.name;
 	}
 	
-	protected void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	
