@@ -11,13 +11,16 @@ import general.AppUtils;
 public class TestAppUtils {
 	
 	final String csv_path = "resources/Modelo_Controle_Orcamentario_Completo.csv";
-	final String basePlanPath = "resources/BasePlan.csv";
 	
 	@Test
 	public void testReadBasePlan() throws Exception {
-		BasePlan basePlan = AppUtils.readBasePlan(basePlanPath);
-		RubricBase rubricBase = basePlan.getRubricsBase().iterator().next();
-		assertTrue("Esperado plano base ter pelo menos uma rubrica", rubricBase.getName().length() > 0);
+		BasePlan basePlan = AppUtils.readBasePlan(csv_path);
+		boolean rubricHasName = false;
+		for (RubricBase rubricBase : basePlan.getRubricsBase()) {
+			rubricHasName = rubricBase.getName().length() > 0;
+		}
+		
+		assertTrue("Esperado plano base ter pelo menos uma rubrica",  rubricHasName);
 	}
 	
 	@Test

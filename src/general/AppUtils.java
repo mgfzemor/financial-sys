@@ -62,7 +62,7 @@ public final class AppUtils {
 	private static RealizedYear extractRealizedYear(CSV csv) {
 		
 		RealizedYear realizedYear = new RealizedYear();
-		for (int j = FIRST_CSV_COLUMN_CONTENT, month = 0;j < csv.columnsSize();j++, month++) {			
+		for (int j = FIRST_CSV_COLUMN_CONTENT, month = 0;j < csv.columnsSize() && month < 12;j++, month++) {			
 			Realized realized = extractRealizedMonth(csv, month);
 			realizedYear.setRealized(realized);
 		}
@@ -76,10 +76,13 @@ public final class AppUtils {
 		
 		int monthColumn = month + FIRST_CSV_COLUMN_CONTENT;
 		
+		Rubric rootRubric = new Rubric();
+		
 		// Get rubric by rubric and set it to realized
 		for (int i = FIRST_CSV_LINE_CONTENT;i < csv.rowsSize();i++) {
 			
 			Rubric rubric = new Rubric();
+						
 			int value = csv.getInt(i, monthColumn);
 			int classification = csv.getInt(i, 0);
 			int code = csv.getInt(i, 1);
@@ -89,6 +92,18 @@ public final class AppUtils {
 			rubric.setCode(code);
 			rubric.setName(name);
 			rubric.setValue(value);
+			
+			String rootClassificationString = "" + (rootRubric != null ? rootRubric.getClassification() : "");
+			String currentClassificationString = ("" + rubric.getClassification());
+			
+			// root is father of the current classification
+			if (rootClassificationString.length() > currentClassificationString.length()) {
+				if (rootRubric != null)
+					rootRubric.setChildren(rubric);
+			}
+			else if (rootClassificationString.length() < currentClassificationString.length()) {
+				rootRubric = rubric;
+			}
 			
 			realized.setRubric(rubric);
 		}

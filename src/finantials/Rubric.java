@@ -19,6 +19,8 @@ public class Rubric extends RubricBase {
 	
 	public Rubric() {
 		children = new HashMap<Integer, Rubric>();
+		value = 0;
+		type = RubricType.Debit;
 	}
 	
 	public float CalcResult() {
