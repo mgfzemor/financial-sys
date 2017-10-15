@@ -6,7 +6,6 @@ import general.Output;
 public abstract class AbstractProjectCommand implements ProjectCommand {
 
 	protected Input input;
-
 	protected Output output;
 
 
@@ -16,7 +15,7 @@ public abstract class AbstractProjectCommand implements ProjectCommand {
 	 *  
 	 */
 	public void setInputStream(Input input) {
-
+		this.input = input;
 	}
 
 
@@ -26,7 +25,7 @@ public abstract class AbstractProjectCommand implements ProjectCommand {
 	 *  
 	 */
 	public void setOutputStream(Output output) {
-
+		this.output = output;
 	}
 
 
