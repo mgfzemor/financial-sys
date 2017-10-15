@@ -25,7 +25,9 @@ public class MenuOptionsCmd extends AbstractMenuOptions implements MenuOptions {
 	 */
 	public void show() {
 		this.showMenuOptions();
-		do {
+		do {		
+			this.output.println("-----------------------------");
+			this.output.print("finantial-sys@command ~ $ ");
 			option = this.input.getInt();
 			switch(this.option) {
 				case 1:
@@ -66,7 +68,5 @@ public class MenuOptionsCmd extends AbstractMenuOptions implements MenuOptions {
 						  + "3 - Change Budgeted month\n"
 						  + "4 - Change Budgeted year\n"
 						  + "5 - Import Realized month");
-		this.output.println("-----------------------------");
-		this.output.print("finantial-sys@command ~ $ ");
 	}
 }
