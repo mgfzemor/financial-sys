@@ -24,8 +24,19 @@ public class Rubric extends RubricBase {
 	public float CalcResult() {
 		if (getAllChildrens().size() > 0) {
 			float componentValue = 0;
-			for (Rubric rubric : getAllChildrens())
-				componentValue += rubric.CalcResult();
+			for (Rubric rubric : getAllChildrens()) {
+				float sum = 0;
+				RubricType type= rubric.getType();
+				switch(type) {
+				case Debit: sum -= rubric.CalcResult();
+					break;
+				case Credit: sum += rubric.CalcResult();
+					break;
+				default:
+					break;
+				}				
+				componentValue += sum;
+			}
 			return componentValue;
 		}
 		else return value;
