@@ -11,7 +11,6 @@ public class CmdInput implements Input {
 	public String getString() {
 		Scanner reader = new Scanner(System.in);
 		String input = reader.nextLine();
-		reader.close();
 		return input;
 	}
 
@@ -22,7 +21,6 @@ public class CmdInput implements Input {
 	public int getInt() {
 		Scanner reader = new Scanner(System.in);
 		int input = reader.nextInt();
-		reader.close();
 		return input;
 	}
 	
@@ -33,7 +31,6 @@ public class CmdInput implements Input {
 	public float getFloat() {
 		Scanner reader = new Scanner(System.in);
 		float input = reader.nextFloat();
-		reader.close();
 		return input;
 	}
 }
