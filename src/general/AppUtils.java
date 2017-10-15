@@ -10,6 +10,22 @@ public final class AppUtils {
 
 	private static final int FIRST_CSV_LINE_CONTENT = 2;
 	private static final int FIRST_CSV_COLUMN_CONTENT = 3;
+	private static final Map<String, Integer> MonthValue = new HashMap<>();
+	
+	static {
+		MonthValue.put("janeiro", 0);
+		MonthValue.put("fevereiro", 1);
+		MonthValue.put("março", 2);
+		MonthValue.put("abril", 3);
+		MonthValue.put("maio", 4);
+		MonthValue.put("junho", 5);
+		MonthValue.put("julho", 6);
+		MonthValue.put("agosto", 7);
+		MonthValue.put("setembro", 8);
+		MonthValue.put("outubro", 9);
+		MonthValue.put("novembro", 10);
+		MonthValue.put("dezembro", 11);
+	}
 	
 	
 	public static String formatDate(Date date) {
@@ -21,52 +37,55 @@ public final class AppUtils {
 		return null;
 	}
 
-	public static RealizedYear readRealizedLastYear(String pathFile) {
-		RealizedYear realizedYear = null;
-		try {
-			CSV csv = parsingCSV(pathFile);
-			BasePlan basePlan = extractBasePlanFromRealizedYearCSV(csv);
-			realizedYear = extractRealizedYear(csv, basePlan);			
+	public static RealizedYear readRealizedLastYear(String pathFile) throws Exception {
+		CSV csv = parsingCSV(pathFile);
+		return extractRealizedYear(csv);
+	}
+
+	public static Realized readRealizedMonth(String pathFile) throws Exception {
+		final CSV csv = parsingCSV(pathFile,',');
+		final String MonthName = csv.getString(0, 0);
+		final int MonthIntValue = MonthValue.get(MonthName.toLowerCase());
 		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		Realized realized = new Realized();
+		
+		for (int i = 2;i < csv.rowsSize();i++) {
+			int code = csv.getInt(i, 1);
+			float Debitvalue = csv.getFloat(i, 2);
 		}
 		
-		return realizedYear;
+		return realized;
 	}
 
-	public static Realized readRealizedMonthly(String pathFile) {
-		return null;
-	}
-
-	private static RealizedYear extractRealizedYear(CSV csv, BasePlan basePlan) {
+	private static RealizedYear extractRealizedYear(CSV csv) {
 		
 		RealizedYear realizedYear = new RealizedYear();
 		for (int j = FIRST_CSV_COLUMN_CONTENT, month = 0;j < csv.columnsSize();j++, month++) {			
-			Realized realized = extractRealizedMonth(csv, month, basePlan);
+			Realized realized = extractRealizedMonth(csv, month);
 			realizedYear.setRealized(realized);
 		}
 		
 		return realizedYear;
 	}
 	
-	private static Realized extractRealizedMonth(CSV csv, int month, BasePlan basePlan) {
+	private static Realized extractRealizedMonth(CSV csv, int month) {
 		
 		Realized realized = new Realized();
-		List<Rubric> rubrics = basePlan.getRubrics();
 		
 		int monthColumn = month + FIRST_CSV_COLUMN_CONTENT;
 		
 		// Get rubric by rubric and set it to realized
-		for (int i = FIRST_CSV_LINE_CONTENT, rubricIdx = 0;i < csv.rowsSize();i++, rubricIdx++) {
+		for (int i = FIRST_CSV_LINE_CONTENT;i < csv.rowsSize();i++) {
 			
-			RubricBase rubricBase = rubrics.get(rubricIdx);
 			Rubric rubric = new Rubric();
 			int value = csv.getInt(i, monthColumn);
-			rubric.setClassification(rubricBase.getClassification());
-			rubric.setCode(rubricBase.getCode());
-			rubric.setName(rubricBase.getName());
+			int classification = csv.getInt(i, 0);
+			int code = csv.getInt(i, 1);
+			String name = csv.getString(i, 2);
+			
+			rubric.setClassification(classification);
+			rubric.setCode(code);
+			rubric.setName(name);
 			rubric.setValue(value);
 			
 			realized.setRubric(rubric);
@@ -150,6 +169,26 @@ public final class AppUtils {
 	
 	private static class CSV extends ArrayList<List<String>> {
 
+		public float getFloat(int i, int j) {
+			String content = getString(i, j);
+			
+			float value = 0;
+			float division = 1;
+			boolean fractionPart = false;
+			for (int idx = 0;idx < content.length();idx++) {
+				final char c = content.charAt(idx);
+				if (Character.isDigit(c)) {
+					value *= 10;
+					value += Character.getNumericValue(c);
+				}
+				
+				if (c == ',') fractionPart = true;
+				if (fractionPart) division *= 10;
+			}
+			
+			return value / division;
+		}
+		
 		public int getInt(int i, int j) {
 			String content = getString(i, j);
 			int value = 0;

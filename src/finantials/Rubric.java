@@ -20,10 +20,7 @@ public class Rubric extends RubricBase {
 	public Rubric() {
 		children = new HashMap<Integer, Rubric>();
 	}
-
-	/**
-	 *  
-	 */
+	
 	public float CalcResult() {
 		if (getAllChildrens().size() > 0) {
 			float componentValue = 0;

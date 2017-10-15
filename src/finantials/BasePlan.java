@@ -10,16 +10,13 @@ import java.util.Map;
 public class BasePlan {
 
 	private Map<Integer, Rubric> rubricsBase;
-	private List<Rubric> rubrics;
 	
 	public BasePlan() {
 		rubricsBase = new HashMap<Integer, Rubric>();
-		rubrics = new ArrayList<Rubric>();
 	}
 	
 	public void setRubric(Rubric rubric) {
 		this.rubricsBase.put(rubric.getCode(), rubric);
-		this.rubrics.add(rubric);
 	}
 	
 	public Rubric getRubric(int code) {
@@ -34,16 +31,11 @@ public class BasePlan {
 		for(Iterator<Rubric> iterator = rubricsBase.iterator(); iterator.hasNext();) {
 			Rubric rubric = iterator.next();
 			this.rubricsBase.put(rubric.getCode(),rubric);
-			this.rubrics.add(rubric);
 		}
 	}
 	
 	public Collection<Rubric> getRubricsBase() {
 		return this.rubricsBase.values();
-	}
-	
-	public List<Rubric> getRubrics() {
-		return this.rubrics;
 	}
 	
 	public void removeAllRubrics() {
