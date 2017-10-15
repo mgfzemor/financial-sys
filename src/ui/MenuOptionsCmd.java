@@ -6,6 +6,7 @@ import finantials.InsertBasePlanCommand;
 import finantials.InsertRealizedMonthCommand;
 import finantials.ModifyBudgetedMonthCommand;
 import finantials.ModifyBudgetedYearCommand;
+import finantials.ShowRealizedLastYear;
 import finantials.UnknownCommand;
 import general.CmdInput;
 import general.CmdOutput;
@@ -25,7 +26,9 @@ public class MenuOptionsCmd extends AbstractMenuOptions implements MenuOptions {
 	 */
 	public void show() {
 		this.showMenuOptions();
-		do {
+		do {		
+			this.output.println("-----------------------------");
+			this.output.print("finantial-sys@command ~ $ ");
 			option = this.input.getInt();
 			switch(this.option) {
 				case 1:
@@ -41,7 +44,9 @@ public class MenuOptionsCmd extends AbstractMenuOptions implements MenuOptions {
 					this.command = new ModifyBudgetedYearCommand();
 					break;
 				case 5:
-					this.command = new  InsertRealizedMonthCommand();
+					this.command = new InsertRealizedMonthCommand();
+				case 6:
+					this.command = new ShowRealizedLastYear();
 					break;
 				case 0:
 					this.command = new ExitCommand();
@@ -61,12 +66,11 @@ public class MenuOptionsCmd extends AbstractMenuOptions implements MenuOptions {
 		this.output.println("Finantial-SYS");
 		this.output.println("-----------------------------");
 		this.output.println("API Options");
-		this.output.println("1 - Import Base plan\n"
+		this.output.println("1 - Import Realized Year\n"
 						  + "2 - Create  a Budget plan\n"
 						  + "3 - Change Budgeted month\n"
 						  + "4 - Change Budgeted year\n"
-						  + "5 - Import Realized month");
-		this.output.println("-----------------------------");
-		this.output.print("finantial-sys@command ~ $ ");
+						  + "5 - Import Realized month\n"
+						  + "6 - Show Realized Year");
 	}
 }

@@ -28,8 +28,8 @@ public class Database {
 		this.realizedCurrentYear.setRealized(realized);
 	}
 	
-	public void storeRealizedLastYear(Realized realized) {
-		this.realizedLastYear.setRealized(realized);
+	public void storeRealizedLastYear(RealizedYear realizedLastYear) {
+		this.realizedLastYear = realizedLastYear;
 	}
 
 	public void storeBudgeted(Budgeted budgeted) {

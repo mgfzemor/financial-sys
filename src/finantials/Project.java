@@ -62,10 +62,6 @@ public class Project extends AbstractCommander {
 
 	}
 
-	public void setRealizedLastYear(RealizedYear realizedLastYear) {
-
-	}
-
 	public boolean checkRubricsOnBasePlan(List<Rubric> rubrics) {
 		return false;
 	}
@@ -75,7 +71,7 @@ public class Project extends AbstractCommander {
 		this.db.storeRealizedCurrentYear(realized);
 	}
 	
-	public void setRealizedLastYear(Realized realized) {
+	public void setRealizedLastYear(RealizedYear realized) {
 		this.db.storeRealizedLastYear(realized);
 	}
 

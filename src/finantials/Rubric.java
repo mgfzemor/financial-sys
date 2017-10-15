@@ -94,4 +94,10 @@ public class Rubric extends RubricBase {
 			return sum;
 		}
 	}
+	
+	public String toString() {
+		String string;
+		string = this.code + " - " + this.name + " - " + this.value;
+		return string;
+	}
 }
