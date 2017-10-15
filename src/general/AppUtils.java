@@ -33,8 +33,9 @@ public final class AppUtils {
 		return dateFormat.format(date);
 	}
 	
-	public static BasePlan readBasePlan(String pathFile) {
-		return null;
+	public static BasePlan readBasePlan(String pathFile) throws Exception {
+		CSV csv = parsingCSV(pathFile);
+		return extractBasePlanFromRealizedYearCSV(csv);
 	}
 
 	public static RealizedYear readRealizedLastYear(String pathFile) throws Exception {
@@ -52,6 +53,7 @@ public final class AppUtils {
 		for (int i = 2;i < csv.rowsSize();i++) {
 			int code = csv.getInt(i, 1);
 			float Debitvalue = csv.getFloat(i, 2);
+			
 		}
 		
 		return realized;
