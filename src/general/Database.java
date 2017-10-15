@@ -3,60 +3,70 @@ package general;
 import finantials.Realized;
 import finantials.RealizedYear;
 import finantials.BudgetedYear;
-import java.util.HashMap;
-import java.util.Map;
+import finantials.Rubric;
+
+import java.util.Collection;
+import java.util.List;
 import finantials.Budgeted;
 import finantials.BasePlan;
 
 public class Database {
 
 	private BudgetedYear budgetedYear;
-	private RealizedYear realizedYear;
+	private RealizedYear realizedCurrentYear;
+	private RealizedYear realizedLastYear;
+	private BasePlan basePlan;
 	
 	public Database(){
 		 budgetedYear = new BudgetedYear();
+		 realizedCurrentYear = new RealizedYear();
+		 realizedLastYear = new RealizedYear();
+		 basePlan = new BasePlan();
 	 }
-	/**
-	 *  
-	 */
-	public void storeRealized(int year, int month, Realized realized) {
 
+	public void storeRealizedCurrentYear(Realized realized) {
+		this.realizedCurrentYear.setRealized(realized);
+	}
+	
+	public void storeRealizedLastYear(Realized realized) {
+		this.realizedLastYear.setRealized(realized);
 	}
 
-	/**
-	 *  
-	 */
-	public void storeBudgeted(int year, Budgeted budgeted) {
-
+	public void storeBudgeted(Budgeted budgeted) {
+		this.budgetedYear.setBudgetedMonth(budgeted);
 	}
 
-	/**
-	 *  
-	 */
-	public Realized loadRealized(int month) {
-		return null;
+	public void storeBasePlan(List<Rubric> rubricBase) {
+		this.basePlan.setRubricsBase(rubricBase);
+	}
+	
+	public Realized loadRealizedCurrentYear(int month) {
+		return this.realizedCurrentYear.getRealized(month);
+	}
+	
+	public Realized loadRealizedLastYear(int month) {
+		return this.realizedLastYear.getRealized(month);
+	}
+	
+	public Collection<Realized> loadRealizedsCurrentYear(){
+		return this.realizedCurrentYear.getAllRealizeds();
+	}
+	
+	public Collection<Realized> loadRealizedsLastYear(){
+		return this.realizedLastYear.getAllRealizeds();
 	}
 
-	/**
-	 *  
-	 */
-	public void loadBudgeted(int month) {
+	public Budgeted loadBudgeted(int month) {
+		return this.budgetedYear.getBudgetedByMonth(month);
 
 	}
 	
-	public void modifyBudgetedYear(int month, Budgeted budgeted) {
-		this.budgetedYear.setBudgetedMonth(month, budgeted);
-	}
-
-	/**
-	 *  
-	 */
-	public void storeBasePlan(BasePlan basePlan) {
-
+	public Collection<Budgeted> loadBudgeteds(){
+		return this.budgetedYear.getAllBudgeteds();
 	}
 	
-	public BudgetedYear getBudgetedYear() {
-		return this.budgetedYear;
+	public BasePlan loadBasePlan() {
+		return this.basePlan;
 	}
-
+	
 }
