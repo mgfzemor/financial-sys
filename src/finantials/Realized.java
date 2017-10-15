@@ -39,5 +39,13 @@ public class Realized extends AbstractBill {
 	public Collection<Rubric> getAllRubrics(){
 		return this.rubrics.values();
 	}
+	
+	public void removeRubric(int code) {
+		this.rubrics.remove(code);
+	}
+	
+	public void removeAllRubrics() {
+		this.rubrics.clear();
+	}
 
 }

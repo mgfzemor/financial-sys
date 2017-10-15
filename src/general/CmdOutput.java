@@ -1,15 +1,21 @@
 package general;
 
 public class CmdOutput implements Output {
-
-
+	
 	/**
-	 * @see general.Output#putData(java.lang.String)
-	 * 
-	 *  
+	 * @see general.Output#println(String)
 	 */
-	public void putData(String out) {
-
+	
+	@Override
+	public void println(String out) {
+		System.out.println(out);
 	}
-
+	
+	/**
+	 * @see general.Output#print(String)
+	 */
+	@Override
+	public void print(String out) {
+		System.out.print(out);		
+	}
 }

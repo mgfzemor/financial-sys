@@ -1,5 +1,5 @@
 package finantials;
 
-public class RubricType {
-
+public enum RubricType {
+	DEBIT,CREDIT
 }

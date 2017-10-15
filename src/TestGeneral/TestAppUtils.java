@@ -16,7 +16,7 @@ public class TestAppUtils {
 	@Test
 	public void testReadBasePlan() throws Exception {
 		BasePlan basePlan = AppUtils.readBasePlan(basePlanPath);
-		RubricBase rubricBase = basePlan.getRubricsBase().get(0);
+		RubricBase rubricBase = basePlan.getRubricsBase().iterator().next();
 		assertTrue("Esperado plano base ter pelo menos uma rubrica", rubricBase.getName().length() > 0);
 	}
 	

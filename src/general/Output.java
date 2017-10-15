@@ -1,10 +1,7 @@
 package general;
 
 public interface Output {
-
-	/**
-	 *  
-	 */
-	public abstract void putData(String out);
-
+	
+	public abstract void println(String out);
+	public abstract void print(String out);
 }

@@ -54,7 +54,7 @@ public final class AppUtils {
 	private static Realized extractRealizedMonth(CSV csv, int month, BasePlan basePlan) {
 		
 		Realized realized = new Realized();
-		List<RubricBase> rubrics = basePlan.getRubricsBase();
+		List<Rubric> rubrics = basePlan.getRubrics();
 		
 		int monthColumn = month + FIRST_CSV_COLUMN_CONTENT;
 		
@@ -79,27 +79,27 @@ public final class AppUtils {
 	
 	private static BasePlan extractBasePlanFromRealizedYearCSV(CSV csv) {
 		BasePlan basePlan = new BasePlan();
-		List<RubricBase> rubrics = readAllRubrics(csv);
+		List<Rubric> rubrics = readAllRubrics(csv);
 		basePlan.setRubricsBase(rubrics);		
 		return basePlan;
 	}
 	
-	private static List<RubricBase> readAllRubrics(CSV csv) {
-		List<RubricBase> rubrics = new ArrayList<>();
+	private static List<Rubric> readAllRubrics(CSV csv) {
+		List<Rubric> rubrics = new ArrayList<>();
 		
 		for (int i = FIRST_CSV_LINE_CONTENT;i < csv.size();i++) {
 			int classification = csv.getInt(i, 0);
 			int code = csv.getInt(i, 1);
 			String name = csv.getString(i, 2);
-			RubricBase rubric = createRubricBase(classification, code, name);
+			Rubric rubric = createRubric(classification, code, name);
 			rubrics.add(rubric);
 		}
 		
 		return rubrics;
 	}
 	
-	private static RubricBase createRubricBase(int classification, int code, String name) {
-		RubricBase rubric = new RubricBase();
+	private static Rubric createRubric(int classification, int code, String name) {
+		Rubric rubric = new Rubric();
 		rubric.setClassification(classification);
 		rubric.setCode(code);
 		rubric.setName(name);
