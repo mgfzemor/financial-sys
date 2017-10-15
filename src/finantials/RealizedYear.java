@@ -23,5 +23,12 @@ public class RealizedYear{
 	public Collection<Realized> getAllRealizeds() {
 		return this.realizeds.values();
 	}
-
+	
+	public void removeRealized(int month) {
+		this.realizeds.remove(month);
+	}
+	
+	public void removeAllRealizeds() {
+		this.realizeds.clear();
+	}
 }

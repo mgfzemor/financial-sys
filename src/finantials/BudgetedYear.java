@@ -8,23 +8,23 @@ import java.util.Map;
 
 public class BudgetedYear {
 
-	private Map<Integer,Budgeted> budgeted;
+	private Map<Integer,Budgeted> budgeteds;
 	private Date freezingDate;
 	
 	public BudgetedYear() {
-		budgeted = new HashMap<Integer,Budgeted>();
+		budgeteds = new HashMap<Integer,Budgeted>();
 	}
 	
 	public Budgeted getBudgetedByMonth(int month) {
-		return this.budgeted.get(month);
+		return this.budgeteds.get(month);
 	}
 	
-	public void setBudgetedMonth(int month, Budgeted budgeted) {
-		this.budgeted.put(month, budgeted);
+	public void setBudgetedMonth(Budgeted budgeted) {
+		this.budgeteds.put(budgeted.getMonth(), budgeted);
 	}
 	
 	public Collection<Budgeted> getAllBudgeteds(){
-		return this.budgeted.values();
+		return this.budgeteds.values();
 	}
 	
 	public void setFreezingDate(int day, int month, int year) {
@@ -48,6 +48,14 @@ public class BudgetedYear {
 			}
 		}
 		return frozen;
+	}
+	
+	public void removeBudgeted(int month) {
+		this.budgeteds.remove(month);
+	}
+	
+	public void removeAllBudgeteds() {
+		this.budgeteds.clear();
 	}
 	
 }

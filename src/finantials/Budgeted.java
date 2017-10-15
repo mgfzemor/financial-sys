@@ -9,17 +9,17 @@ public class Budgeted extends AbstractBill {
 
 	private Map<Integer, Rubric> rubrics;
 
-	private Date month;
+	private int month;
 	
 	public Budgeted() {
 		this.rubrics = new HashMap<Integer, Rubric>();
 	}
 	
-	public Date getMonth() {
+	public int getMonth() {
 		return this.month;
 	}
 	
-	public void setMonth(Date month) {
+	public void setMonth(int month) {
 		this.month = month;
 	}
 	
@@ -33,5 +33,13 @@ public class Budgeted extends AbstractBill {
 	
 	public Collection<Rubric> getAllRubrics(){
 		return this.rubrics.values();
+	}
+	
+	public void removeRubric(int code) {
+		this.rubrics.remove(code);
+	}
+	
+	public void removeAllRubrics() {
+		this.rubrics.clear();
 	}
 }

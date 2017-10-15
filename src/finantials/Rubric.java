@@ -37,6 +37,14 @@ public class Rubric extends RubricBase {
 		childrens.put(rubric.code , rubric);
 	}
 	
+	public void removeChildren(Rubric rubric) {
+		this.childrens.remove(rubric.getCode());
+	}
+	
+	public void removeAllChildrens() {
+		this.childrens.clear();
+	}
+	
 	public Collection<Rubric> getAllChildrens(){
 		return this.childrens.values();
 	}
