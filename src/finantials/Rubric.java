@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class Rubric extends RubricBase {
+public class Rubric extends RubricBase implements Cloneable{
 
 	public enum RubricType {
 		Debit, Credit
@@ -46,6 +46,10 @@ public class Rubric extends RubricBase {
 	
 	public void setValue(float value) {
 		this.value = value;
+	}
+	
+	public float getValue() {
+		return this.value;
 	}
 	
 	public void setType(RubricType type) {
@@ -97,7 +101,8 @@ public class Rubric extends RubricBase {
 	
 	public String toString() {
 		String string;
-		string = this.code + " - " + this.name + " - " + this.value;
+		string = this.code + " - " + this.name + " - " + this.value + "\n";
 		return string;
 	}
+	
 }
