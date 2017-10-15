@@ -7,11 +7,15 @@ import java.util.Map;
 
 public class Rubric extends RubricBase {
 
+	public enum RubricType {
+		Debit, Credit
+	}
+	
 	private Map<Integer, Rubric> children;
 
 	private float value;
 
-	private Enum type;
+	private RubricType type;
 	
 	public Rubric() {
 		children = new HashMap<Integer, Rubric>();
@@ -21,7 +25,21 @@ public class Rubric extends RubricBase {
 	 *  
 	 */
 	public float CalcResult() {
-		return 0;
+		if (getAllChildrens().size() > 0) {
+			float componentValue = 0;
+			for (Rubric rubric : getAllChildrens())
+				componentValue += rubric.CalcResult();
+			return componentValue;
+		}
+		else return value;
+	}
+	
+	public void setValue(float value) {
+		this.value = value;
+	}
+	
+	public void setType(RubricType type) {
+		this.type = type;
 	}
 
 	/**
