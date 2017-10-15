@@ -1,22 +1,19 @@
 package general;
 
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import finantials.*;
-
 import ui.MenuOptions;
+import ui.MenuOptionsCmd;
 
 public class App {
-
-	private static Project p = new Project();
 	private static MenuOptions menuOptions;
-
+	
 	public static void main(String args[]) {
-		p.getBudgetedYear().setFreezingDate(13,9, 2017);
-		if(p.getBudgetedYear().isFrozen()) {
-			System.out.println("frozen");
-		}
-		else {
-			System.out.println("not frozen yet");
-		}
+		menuOptions = new MenuOptionsCmd();
+		menuOptions.show();
 	}
 
 }

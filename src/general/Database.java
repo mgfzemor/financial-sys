@@ -40,11 +40,11 @@ public class Database {
 		this.basePlan.setRubricsBase(rubricBase);
 	}
 	
-	public Realized loadRealizedCurrentYear(int month) {
+	public Realized loadRealizedCurrentYearByMonth(int month) {
 		return this.realizedCurrentYear.getRealized(month);
 	}
 	
-	public Realized loadRealizedLastYear(int month) {
+	public Realized loadRealizedLastYearByMonth(int month) {
 		return this.realizedLastYear.getRealized(month);
 	}
 	
@@ -56,7 +56,7 @@ public class Database {
 		return this.realizedLastYear.getAllRealizeds();
 	}
 
-	public Budgeted loadBudgeted(int month) {
+	public Budgeted loadBudgetedByMonth(int month) {
 		return this.budgetedYear.getBudgetedByMonth(month);
 
 	}
@@ -68,5 +68,4 @@ public class Database {
 	public BasePlan loadBasePlan() {
 		return this.basePlan;
 	}
-	
 }

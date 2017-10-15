@@ -1,6 +1,8 @@
 package finantials;
 
 import general.Database;
+
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import general.AppUtils;
@@ -68,8 +70,50 @@ public class Project extends AbstractCommander {
 		return false;
 	}
 	
-	public BudgetedYear getBudgetedYear() {
-		return this.db.getBudgetedYear();
+	
+	public void setRealizedCurrentYear(Realized realized) {
+		this.db.storeRealizedCurrentYear(realized);
+	}
+	
+	public void setRealizedLastYear(Realized realized) {
+		this.db.storeRealizedLastYear(realized);
+	}
+
+	public void setBudgeted(Budgeted budgeted) {
+		this.db.storeBudgeted(budgeted);
+	}
+
+	public void setBasePlan(List<Rubric> rubricBase) {
+		this.db.storeBasePlan(rubricBase);
+	}
+	
+	public Realized getRealizedCurrentYearByMonth(int month) {
+		return this.db.loadRealizedCurrentYearByMonth(month);
+	}
+	
+	public Realized getRealizedLastYearByMonth(int month) {
+		return this.db.loadRealizedLastYearByMonth(month);
+	}
+	
+	public Collection<Realized> getRealizedsCurrentYear(){
+		return this.db.loadRealizedsCurrentYear();
+	}
+	
+	public Collection<Realized> getRealizedsLastYear(){
+		return this.db.loadRealizedsLastYear();
+	}
+
+	public Budgeted getBudgetedByMonth(int month) {
+		return this.db.loadBudgetedByMonth(month);
+
+	}
+	
+	public Collection<Budgeted> getBudgeteds(){
+		return this.db.loadBudgeteds();
+	}
+	
+	public BasePlan getBasePlan() {
+		return this.db.loadBasePlan();
 	}
 
 }
