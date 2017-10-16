@@ -77,6 +77,7 @@ public class MenuOptionsCmd extends AbstractMenuOptions implements MenuOptions {
 						  + "4 - Change Budgeted year\n"
 						  + "5 - Import Realized month\n"
 						  + "6 - Show Realized Last Year\n"
-						  + "7 - Show Realizeds current year ");
+						  + "7 - Show Realizeds current year\n"
+						  + "0 - exit");
 	}
 }

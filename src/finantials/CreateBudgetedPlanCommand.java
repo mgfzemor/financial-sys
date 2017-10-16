@@ -9,17 +9,16 @@ public class CreateBudgetedPlanCommand extends AbstractProjectCommand {
 	public void execute(Project project) {
 		boolean keep = true;
 		do {
-			
-			this.showMonthOptions();
-			int month = this.input.getInt();
+			int month = this.showMonthOptions();
 			Realized realized = project.getRealizedLastYearByMonth(month);
 			this.output.println(realized.rubricsToString());
 			this.output.println("Select a rubric code to budget: ");
 			int code = this.input.getInt();
 			Rubric rubric = realized.getRubric(code);
-			this.showRubricOptions();
-			int option = this.input.getInt();
+			int option = this.showRubricOptions();
 			rubric = this.executeOption(option, rubric);
+			this.output.println("new amount:");
+			this.output.println(rubric.toString());
 			budgeted.setRubric(rubric);
 			budgeted.setMonth(month);
 			project.setBudgeted(budgeted);
@@ -56,15 +55,14 @@ public class CreateBudgetedPlanCommand extends AbstractProjectCommand {
 	
 	private Rubric subCommandPercentage(float percentage, int operationSignal, Rubric rubric) {
 		float newAmount = rubric.getValue();
-		this.output.println(rubric.toString());
 		newAmount += (newAmount* (percentage/100))*operationSignal;
 		rubric.setValue(newAmount);
-		this.output.println("new amount: "+newAmount);
 		return rubric;
 	}
 	
 
-	private void showMonthOptions() {
+	private int showMonthOptions() {
+		int option = 0;
 		this.output.println("---------------------");
 		this.output.println("| 1 - January\n"
 						  + "| 2 - February\n"
@@ -78,38 +76,51 @@ public class CreateBudgetedPlanCommand extends AbstractProjectCommand {
 						  + "| 10 - October\n"
 						  + "| 11 - November\n"
 						  + "| 12 - December");
-		this.output.println("---------------------");
-		this.output.print("Select a month for budget: ");
+		do {
+			this.output.println("---------------------");
+			this.output.print("Select a month for budget: ");
+			option = this.input.getInt();
+		} while (option < 1 || option > 12);
+		return option;
 	}
 	
-	private void showRubricOptions() {
+	private int showRubricOptions() {
+		int option = 0;
 		this.output.println("---------------------");
 		this.output.println("| 1 - Percentage\n"
 						  + "| 2 - Fixed\n"
 				          + "| 3 - Unchanged");
-		this.output.println("---------------------");
-		this.output.print("Select the type of modification: ");
+		do {
+			this.output.println("---------------------");
+			this.output.print("Select the type of modification: ");
+			option = this.input.getInt();
+		} while(option < 1 || option > 3);
+		return option;
 	}
 	
 	private int showSignalOprions() {
+		int option = 0;
+		int signal = 1;
 		this.output.println("---------------------");
 		this.output.println("| 1 - Increase\n"
 				  		  + "| 2 - Decrease");
-		this.output.println("---------------------");
-		this.output.print("Select operation type");
-		int option = this.input.getInt();
-		int signal = 1;
-		switch(option) {
-			case 1: //Increase
-				signal = 1;
-				break;
-			case 2: //Decrease
-				signal = -1;
-				break;
-			default:
-				break;
-		}
-		
+		do {
+			this.output.println("---------------------");
+			this.output.print("Select operation type");
+			option = this.input.getInt();
+			
+			switch(option) {
+				case 1: //Increase
+					signal = 1;
+					break;
+				case 2: //Decrease
+					signal = -1;
+					break;
+				default:
+					this.output.println("Invalid option");
+					break;
+			}
+		} while(option< 1 || option > 2);
 		return signal;
 	}
 	

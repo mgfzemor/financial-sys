@@ -6,7 +6,7 @@ public class InsertBasePlanCommand extends AbstractProjectCommand {
 
 	public void execute(Project project){
 		// resources/Modelo_Controle_Orcamentario_Completo.csv
-		this.output.println("enter the file path: ");
+		this.output.print("enter the file path: ");
 		String filePath = this.input.getString();
 		RealizedYear realizedLastYear;
 		try {

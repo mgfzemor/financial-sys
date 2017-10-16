@@ -8,5 +8,4 @@ public class ShowRealizationsUntilNowCommand extends AbstractProjectCommand {
 			this.output.println(realized.toString());
 		}
 	}
-
 }
