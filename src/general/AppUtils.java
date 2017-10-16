@@ -27,45 +27,49 @@ public final class AppUtils {
 		MonthValue.put("dezembro", 11);
 	}
 	
-	
 	public static String formatDate(Date date) {
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		return dateFormat.format(date);
+		return new SimpleDateFormat("dd/MM/yyyy").format(date);
 	}
 	
 	public static BasePlan readBasePlan(String pathFile) throws Exception {
-		CSV csv = parsingCSV(pathFile);
-		return extractBasePlanFromRealizedYearCSV(csv);
+		return extractBasePlanFromRealizedYearCSV(parsingCSV(pathFile));
 	}
 
 	public static RealizedYear readRealizedLastYear(String pathFile) throws Exception {
-		CSV csv = parsingCSV(pathFile);
-		return extractRealizedYear(csv);
+		return extractRealizedYear(parsingCSV(pathFile));
 	}
 
 	public static Realized readRealizedMonth(String pathFile) throws Exception {
-		final CSV csv = parsingCSV(pathFile,',');
+		final CSV csv = parsingCSV(pathFile, ',');
 		final String MonthName = csv.getString(0, 0);
 		final int MonthIntValue = MonthValue.get(MonthName.toLowerCase());
 		
 		Realized realized = new Realized();
 		
 		for (int i = 2;i < csv.rowsSize();i++) {
+			String name = csv.getString(i, 0).trim();
 			int code = csv.getInt(i, 1);
-			float Debitvalue = csv.getFloat(i, 2);
+			float debitvalue = (float)csv.getFloat(i, 2);
+			float creditvalue = (float)csv.getFloat(i, 3);
 			
+			Rubric rubric = new Rubric();
+			rubric.setName(name);
+			rubric.setCode(code);
+			rubric.setDebitValue(debitvalue);
+			rubric.setCreditValue(creditvalue);
+			
+			realized.setRubric(rubric);
 		}
 		
+		realized.setMonth(MonthIntValue);
 		return realized;
 	}
 
 	private static RealizedYear extractRealizedYear(CSV csv) {
 		
 		RealizedYear realizedYear = new RealizedYear();
-		for (int j = FIRST_CSV_COLUMN_CONTENT, month = 0;j < csv.columnsSize() && month < 12;j++, month++) {			
-			Realized realized = extractRealizedMonth(csv, month);
-			realizedYear.setRealized(realized);
-		}
+		for (int month = 0;month < 12;month++)
+			realizedYear.setRealized(extractRealizedMonth(csv, month));
 		
 		return realizedYear;
 	}
@@ -93,15 +97,14 @@ public final class AppUtils {
 			rubric.setName(name);
 			rubric.setValue(value);
 			
-			String rootClassificationString = "" + (rootRubric != null ? rootRubric.getClassification() : "");
-			String currentClassificationString = ("" + rubric.getClassification());
+			String rootClassificationString = rootRubric != null ? "" + rootRubric.getClassification() : "";
+			String currentClassificationString = "" + rubric.getClassification();
 			
 			// root is father of the current classification
-			if (rootClassificationString.length() > currentClassificationString.length()) {
-				if (rootRubric != null)
-					rootRubric.setChildren(rubric);
+			if (rootClassificationString.length() < currentClassificationString.length() ) {
+				rootRubric.setChildren(rubric);				
 			}
-			else if (rootClassificationString.length() < currentClassificationString.length()) {
+			else if (rootClassificationString.length() > currentClassificationString.length()) {
 				rootRubric = rubric;
 			}
 			
@@ -150,7 +153,7 @@ public final class AppUtils {
 		return parsingCSV(pathFile, ';');
 	}
 	
-	private static CSV parsingCSV(String pathFile, final char SEPARATOR) throws IOException {
+	private static CSV parsingCSV(String pathFile, final Character SEPARATOR) throws IOException {
 		File csvFile = new File(pathFile);
 		CSV content = new CSV();
 		
@@ -163,18 +166,17 @@ public final class AppUtils {
 				final char QUOTE = '"';
 
 				boolean isContent = false;
-				
+				boolean inQuotesContent = false;
 				for (int i = 0;i < line.length();i++) {
 					
 					final char c = line.charAt(i);
 					if (i == 0 && c != SEPARATOR) isContent = true;
-					else if (c == QUOTE && i != 0) isContent = !isContent;
-					else if (c == SEPARATOR || i == line.length() - 1) {
+					if (c == QUOTE) inQuotesContent = !inQuotesContent;
+					if (!inQuotesContent && (c == SEPARATOR || i == line.length() - 1)) {
 						fields.add(field);
 						field = "";
 					}
-					
-					if (isContent && c != SEPARATOR) field += c;
+					else if (isContent && c != QUOTE) field += c;
 				}
 				
 				content.add(fields);
@@ -184,13 +186,13 @@ public final class AppUtils {
 		return content;		
 	}
 	
-	private static class CSV extends ArrayList<List<String>> {
+	public static class CSV extends ArrayList<List<String>> {
 
 		public float getFloat(int i, int j) {
 			String content = getString(i, j);
 			
-			float value = 0;
-			float division = 1;
+			double value = 0;
+			double division = 0.1f;
 			boolean fractionPart = false;
 			for (int idx = 0;idx < content.length();idx++) {
 				final char c = content.charAt(idx);
@@ -203,7 +205,7 @@ public final class AppUtils {
 				if (fractionPart) division *= 10;
 			}
 			
-			return value / division;
+			return (float)(value / division);
 		}
 		
 		public int getInt(int i, int j) {

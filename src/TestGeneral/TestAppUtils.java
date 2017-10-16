@@ -2,15 +2,18 @@ package TestGeneral;
 
 import static org.junit.Assert.*;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.junit.Test;
 import finantials.*;
 import general.AppUtils;
+import general.AppUtils.CSV;
 
 public class TestAppUtils {
 	
 	final String csv_path = "resources/Modelo_Controle_Orcamentario_Completo.csv";
+	final String realized_csv_path = "resources/RealizadoMensal_Janeiro.csv";
 	
 	@Test
 	public void testReadBasePlan() throws Exception {
@@ -46,6 +49,25 @@ public class TestAppUtils {
 		}
 		
 		assertTrue("Esperado valor da rubrica extraída é de R$ 593650", hasJan1stRubricValueCorrect);
+	}
+	
+	@Test
+	public void testRealizedMonth() throws Exception {
+		Realized realizedJan = AppUtils.readRealizedMonth(realized_csv_path);
+		assertTrue("Esperado que o nome da rubrica com código 100 seja 'RESULTADO -'", realizedJan.getRubric(100).getName().equals("RESULTADO -"));
+		assertTrue("Esperado que seja realizado do mês de janeiro", realizedJan.getMonth() == 0);
+	}
+	
+	@Test
+	public void testParseComaSeparatedCSVFile() throws Exception {
+		final String parsingCSVMethodName = "parsingCSV";
+		Method parsingCSV = AppUtils.class.getDeclaredMethod(parsingCSVMethodName, new Class[] {String.class, Character.class});
+		parsingCSV.setAccessible(true);
+		CSV csv = (CSV)parsingCSV.invoke(AppUtils.class, realized_csv_path, ',');
+		String expected = "536.602,37";
+		String contentL2C3 = csv.getString(2, 3);
+		//TODO: resolve round problems
+		assertTrue("Esperado extrair corretamente o conteúdo do CSV", contentL2C3.equals(expected));		
 	}
 	
 	@Test

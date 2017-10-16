@@ -14,6 +14,8 @@ public class Rubric extends RubricBase {
 	private Map<Integer, Rubric> children;
 
 	private float value;
+	private float debitValue;
+	private float creditValue;
 
 	private RubricType type;
 	
@@ -46,6 +48,22 @@ public class Rubric extends RubricBase {
 	
 	public void setValue(float value) {
 		this.value = value;
+	}
+	
+	public void setDebitValue(float value) {
+		this.debitValue = value;
+	}
+	
+	public float getDebitValue() {
+		return this.debitValue;
+	}
+	
+	public void setCreditValue(float value) {
+		this.creditValue = value;
+	}
+	
+	public float getCreditValue() {
+		return this.creditValue;
 	}
 	
 	public void setType(RubricType type) {
