@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class Realized extends AbstractBill {
+public class Realized extends AbstractBill implements Cloneable {
 	
 	private Map<Integer, Rubric> rubrics;
 
@@ -47,5 +47,17 @@ public class Realized extends AbstractBill {
 	public void removeAllRubrics() {
 		this.rubrics.clear();
 	}
-
+	
+	public String rubricsToString() {
+		String string = "---------------------";
+		for(Rubric rubric: this.getAllRubrics()) {
+			string += rubric.toString();
+		}
+		string += "---------------------";
+		return string;
+	}
+	
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 }
