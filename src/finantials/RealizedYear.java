@@ -31,4 +31,12 @@ public class RealizedYear{
 	public void removeAllRealizeds() {
 		this.realizeds.clear();
 	}
+	
+	public String toString() {
+		String string = "";
+		for(Realized realized: this.getAllRealizeds()) {
+			string += realized.toString();
+		}
+		return string;
+	}
 }

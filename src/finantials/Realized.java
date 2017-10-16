@@ -57,6 +57,12 @@ public class Realized extends AbstractBill implements Cloneable {
 		return string;
 	}
 	
+	public String toString() {
+		String string = "realized month: "+ this.month;
+		string += this.rubricsToString();
+		return string;
+	}
+	
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
 	}

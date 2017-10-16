@@ -6,6 +6,7 @@ import finantials.InsertBasePlanCommand;
 import finantials.InsertRealizedMonthCommand;
 import finantials.ModifyBudgetedMonthCommand;
 import finantials.ModifyBudgetedYearCommand;
+import finantials.ShowRealizationsUntilNowCommand;
 import finantials.ShowRealizedLastYear;
 import finantials.UnknownCommand;
 import general.CmdInput;
@@ -49,6 +50,9 @@ public class MenuOptionsCmd extends AbstractMenuOptions implements MenuOptions {
 				case 6:
 					this.command = new ShowRealizedLastYear();
 					break;
+				case 7:
+					this.command = new ShowRealizationsUntilNowCommand();
+					break;
 				case 0:
 					this.command = new ExitCommand();
 					break;
@@ -67,11 +71,12 @@ public class MenuOptionsCmd extends AbstractMenuOptions implements MenuOptions {
 		this.output.println("Finantial-SYS");
 		this.output.println("-----------------------------");
 		this.output.println("API Options");
-		this.output.println("1 - Import Realized Year\n"
+		this.output.println("1 - Import Realized Last Year\n"
 						  + "2 - Create  a Budget plan\n"
 						  + "3 - Change Budgeted month\n"
 						  + "4 - Change Budgeted year\n"
 						  + "5 - Import Realized month\n"
-						  + "6 - Show Realized Year");
+						  + "6 - Show Realized Last Year\n"
+						  + "7 - Show Realizeds current year ");
 	}
 }
