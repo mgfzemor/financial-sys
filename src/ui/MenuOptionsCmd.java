@@ -45,6 +45,7 @@ public class MenuOptionsCmd extends AbstractMenuOptions implements MenuOptions {
 					break;
 				case 5:
 					this.command = new InsertRealizedMonthCommand();
+					break;
 				case 6:
 					this.command = new ShowRealizedLastYear();
 					break;
