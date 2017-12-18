@@ -1,34 +1,32 @@
 package finantials;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Rubric extends RubricBase implements Cloneable{
-
-	public enum RubricType {
-		Debit, Credit
-	}
+public class Rubric {
 	
-	private Map<Integer, Rubric> children;
+	public enum RubricType { Debit, Credit }
+
+	private List<Rubric> children;
 
 	private float value;
-	private float debitValue;
-	private float creditValue;
 
 	private RubricType type;
-	
+
+	private int classification;
+
+	private int code;
+
+	private String name;
+
 	public Rubric() {
-		children = new HashMap<Integer, Rubric>();
-		value = 0;
-		type = RubricType.Debit;
+		children = new ArrayList<Rubric>();
 	}
 	
 	public float CalcResult() {
-		if (getAllChildrens().size() > 0) {
+		if (children.size() > 0) {
 			float componentValue = 0;
-			for (Rubric rubric : getAllChildrens()) {
+			for (Rubric rubric : children) {
 				float sum = 0;
 				RubricType type= rubric.getType();
 				switch(type) {
@@ -45,82 +43,64 @@ public class Rubric extends RubricBase implements Cloneable{
 		}
 		else return value;
 	}
-	
+
+	public void addChildren(Rubric rubric) {
+		children.add(rubric);
+	}
+
+	public Rubric[] getChildren() {
+		return (Rubric[])children.toArray();
+	}
+
+	public float getValue() {
+		return value;
+	}
+
 	public void setValue(float value) {
 		this.value = value;
 	}
-	
-	public void setDebitValue(float value) {
-		this.debitValue = value;
+
+	public RubricType getType() {
+		return type;
 	}
-	
-	public float getDebitValue() {
-		return this.debitValue;
-	}
-	
-	public void setCreditValue(float value) {
-		this.creditValue = value;
-	}
-	
-	public float getCreditValue() {
-		return this.creditValue;
-	}
-	
-	public float getValue() {
-		return this.value;
-	}
-	
+
 	public void setType(RubricType type) {
 		this.type = type;
 	}
 
-	public RubricType getType() {
-		return this.type;
-	}
-	
-	public void setChildren(Rubric rubric) {
-		children.put(rubric.code , rubric);
-	}
-	
-	public void removeChildren(Rubric rubric) {
-		this.children.remove(rubric.getCode());
-	}
-	
-	public void removeAllChildrens() {
-		this.children.clear();
-	}
-	
-	public Collection<Rubric> getAllChildrens(){
-		return this.children.values();
+	public int getClassification() {
+		return classification;
 	}
 
-	private float sumRubrics(Collection<Rubric> rubrics) {
-		if (rubrics == null) {
-			return 0;
-		}
-		else {
-			float sum = 0;
-			for(Iterator<Rubric> iterator = rubrics.iterator(); iterator.hasNext();) {
-				Rubric rubric = iterator.next();
-				RubricType type= rubric.getType();
-				switch(type) {
-				case Debit: sum -= rubric.CalcResult();
-					break;
-				case Credit: sum += rubric.CalcResult();
-					break;
-				default:
-					break;
-				}
-				sum += this.sumRubrics(rubric.getAllChildrens());
-			}
-			return sum;
-		}
+	public void setClassification(int classification) {
+		this.classification = classification;
+	}
+
+	public int getCode() {
+		return code;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
-	public String toString() {
-		String string;
-		string = this.code + " - " + this.name + " - " + this.value + "\n";
-		return string;
+	public Rubric clone() {
+		Rubric rubric = new Rubric();
+		
+		rubric.setClassification(classification);
+		rubric.setCode(code);
+		rubric.setName(name);
+		rubric.setType(type);
+		rubric.setValue(value);
+		
+		return rubric;
 	}
-	
 }
